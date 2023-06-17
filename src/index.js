@@ -1,4 +1,6 @@
 import React from "react";
+//eslint-disable-next-line
+import { Chart as ChartJS } from "chart.js/auto";
 import ReactDOM from "react-dom/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import reportWebVitals from "./reportWebVitals";
