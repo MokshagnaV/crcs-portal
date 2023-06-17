@@ -13,18 +13,37 @@ import {
   Flex,
   Alert,
   AlertIcon,
+  useToast,
 } from "@chakra-ui/react";
 import formDataToJSON from "../services/getFormData";
+import authServices from "../services/authServices";
 import { useDispatch } from "react-redux";
-import { regActions } from "../store/regSlice";
+import { userActions } from "../store/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Registration = (props) => {
+  const toast = useToast();
   const dispatch = useDispatch();
-  
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    dispatch(regActions.submit(formDataToJSON(data)));
+    // dispatch(loginActions.submit(formDataToJSON(data)));
+    const regData = formDataToJSON(data);
+    try {
+      const user = await authServices.register(regData);
+      dispatch(userActions.setUser(user));
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: error.message,
+        status: "error",
+        isClosable: true,
+        duration: 5000,
+      });
+    }
   };
 
   return (
@@ -36,7 +55,7 @@ const Registration = (props) => {
           </Heading>
           <Text>Office of The Central Registrar of Cooperative Societies </Text>
           <Box bg="gray.300" py="1rem" width="100%" align="center">
-            <Heading as="h1" size="l">
+            <Heading as="h1" size="l" color="black">
               User Registration Form
             </Heading>
           </Box>
@@ -46,10 +65,7 @@ const Registration = (props) => {
             <Box flexGrow="1">
               <FormControl isRequired>
                 <FormLabel>Select State (Head Quater) :</FormLabel>
-                <Select
-                  placeholder="Select option"
-                  name="state"
-                >
+                <Select placeholder="Select option" name="state">
                   <option value="option1">Option 1</option>
                   <option value="option2">Option 2</option>
                   <option value="option3">Option 3</option>
@@ -80,11 +96,7 @@ const Registration = (props) => {
           <Stack m="1rem">
             <FormControl isRequired>
               <FormLabel>Consumer Name :</FormLabel>
-              <Select placeholder="Select option" name="name">
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
-              </Select>
+              <Input placeholder="Please Enter Name" name="name" />
             </FormControl>
           </Stack>
           <Stack m="1rem">
@@ -92,14 +104,14 @@ const Registration = (props) => {
               <FormLabel>
                 Complete Reistered Address (with PIN code):{" "}
               </FormLabel>
-              <Textarea name="address"/>
+              <Textarea name="address" />
             </FormControl>
           </Stack>
           <Stack direction="row" spacing="1rem" m="1rem">
             <Box flexGrow="1">
               <FormControl isRequired>
                 <FormLabel>PAN No. :</FormLabel>
-                <Input placeholder="Please Enter PAN No." name="pan"/>
+                <Input placeholder="Please Enter PAN No." name="pan" />
               </FormControl>
             </Box>
             <Box flexGrow="1">
@@ -116,7 +128,7 @@ const Registration = (props) => {
                   Name of MD/Chairman/Vice Chairman/ Officers Authorized
                   (Select) :
                 </FormLabel>
-                <Input placeholder="Please Enter Name" name="name_of_md"/>
+                <Input placeholder="Please Enter Name" name="name_of_md" />
               </FormControl>
             </Box>
             <Box flexGrow="1">
@@ -134,13 +146,17 @@ const Registration = (props) => {
             <Box flexGrow="1">
               <FormControl isRequired>
                 <FormLabel>Mobile No. of Authorized Ofiicer</FormLabel>
-                <Input placeholder="Please Enter Mobile No." name="mobile_no"/>
+                <Input placeholder="Please Enter Mobile No." name="mobile_no" />
               </FormControl>
             </Box>
             <Box flexGrow="1">
               <FormControl isRequired>
                 <FormLabel>Email ID :</FormLabel>
-                <Input type="email" placeholder="Please Enter Email ID" name="email_id"/>
+                <Input
+                  type="email"
+                  placeholder="Please Enter Email ID"
+                  name="email_id"
+                />
               </FormControl>
             </Box>
           </Stack>
@@ -148,7 +164,10 @@ const Registration = (props) => {
             <Box>
               <FormControl isRequired>
                 <FormLabel>Service Tax No. :</FormLabel>
-                <Input placeholder="Please Enter Serivce Tax No." name="service_tax_no"/>
+                <Input
+                  placeholder="Please Enter Serivce Tax No."
+                  name="service_tax_no"
+                />
               </FormControl>
             </Box>
           </Stack>
@@ -156,13 +175,20 @@ const Registration = (props) => {
             <Box flexGrow="1">
               <FormControl isRequired>
                 <FormLabel>Password :</FormLabel>
-                <Input placeholder="Please Enter Password" name="password"/>
+                <Input
+                  type="password"
+                  placeholder="Please Enter Password"
+                  name="password"
+                />
               </FormControl>
             </Box>
             <Box flexGrow="1">
               <FormControl isRequired>
                 <FormLabel>Confirm Password :</FormLabel>
-                <Input placeholder="Please Enter Confirm Password" />
+                <Input
+                  type="password"
+                  placeholder="Please Enter Confirm Password"
+                />
               </FormControl>
             </Box>
           </Stack>
