@@ -2,6 +2,7 @@ import { Box, Grid, GridItem, Select } from "@chakra-ui/react";
 import SideBar from "./sideBar";
 import {
   socitiesCountAccToStates,
+  socitiesCountAccToDistrict,
   socitiesCountAccToSector,
   noOfRegPerYear,
 } from "../services/chartServices/dataService";
@@ -12,6 +13,13 @@ import PieChart from "./common/pieChart";
 import LineChart from "./common/lineChart";
 
 const Dashboard = (props) => {
+  const [barChartData, setBarChartData] = useState(socitiesCountAccToStates());
+  const [barDrill, setBarDrill] = useState("none");
+
+  const [pieChartData] = useState(socitiesCountAccToSector());
+  const [lineChartData] = useState(noOfRegPerYear());
+  const [order, setOrder] = useState(0);
+
   const barRef = useRef();
   const pieRef = useRef();
   const lineRef = useRef();
@@ -19,7 +27,11 @@ const Dashboard = (props) => {
     if (getElementAtEvent(barRef.current, e).length > 0) {
       const [{ index }] = getElementAtEvent(barRef.current, e);
       const label = data.labels[index];
-      console.log(label);
+      if (socitiesCountAccToDistrict(label)) {
+        const districtsData = socitiesCountAccToDistrict(label);
+        setBarChartData(districtsData);
+        setBarDrill("true");
+      }
     }
   };
   const handlePieClick = (e, data) => {
@@ -37,17 +49,19 @@ const Dashboard = (props) => {
     }
   };
 
-  const [barChartData] = useState(socitiesCountAccToStates());
-  const [pieChartData] = useState(socitiesCountAccToSector());
-  const [lineChartData] = useState(noOfRegPerYear());
-  const [order, setOrder] = useState(0);
-
   const handleChange = (e) => {
     setOrder(parseInt(e.currentTarget.value));
   };
+  const handleDrill = () => {
+    setBarChartData(socitiesCountAccToStates());
+    setBarDrill("none");
+  };
 
   const getBarData = (sortOrder) => {
-    const dataArray = Object.entries(barChartData);
+    const originalBarData = { ...barChartData };
+    const type = originalBarData.type;
+    delete originalBarData.type;
+    const dataArray = Object.entries(originalBarData);
     let barData;
     if (sortOrder !== 0) {
       barData = Object.fromEntries(
@@ -62,7 +76,7 @@ const Dashboard = (props) => {
       labels: Object.keys(barData),
       datasets: [
         {
-          label: "No. of Socities in each State",
+          label: "No. of Socities in each " + type,
           data: Object.values(barData),
           borderWidth: 1,
         },
@@ -119,6 +133,8 @@ const Dashboard = (props) => {
               chartData={getBarData(order)}
               handleClick={(e) => handleBarClick(e, getBarData(order))}
               chartRef={barRef}
+              handleDrill={handleDrill}
+              display={barDrill}
             />
           </Box>
           <Box textAlign="center">

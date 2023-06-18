@@ -15,7 +15,28 @@ export function socitiesCountAccToStates() {
   for (let i = 0; i < states.length; i++) {
     res[states[i]] = socitiesCount[i];
   }
+  res.type = "States";
   return res;
+}
+
+export function socitiesCountAccToDistrict(state) {
+  const districts = Array.from(
+    new Set(data.filter((d) => d.State === state).map((d) => d.District))
+  );
+
+  const socitiesCount = new Array(districts.length).fill(0);
+
+  districts.forEach((district, i) => {
+    data.forEach((d) => {
+      if (d.District === district) socitiesCount[i]++;
+    });
+  });
+  const res = {};
+  for (let i = 0; i < districts.length; i++) {
+    res[districts[i]] = socitiesCount[i];
+  }
+  res.type = `${state} districts`;
+  return Object.keys(res).length > 1 ? res : null;
 }
 
 export function socitiesCountAccToSector() {
