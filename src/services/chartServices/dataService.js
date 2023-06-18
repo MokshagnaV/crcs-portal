@@ -52,7 +52,27 @@ export function socitiesCountAccToSector() {
   for (let i = 0; i < sectors.length; i++) {
     res[sectors[i]] = socitiesCount[i];
   }
+  res.type = "Sector";
   return res;
+}
+
+export function stateCountAccToSector(sector) {
+  const states = Array.from(
+    new Set(data.filter((d) => d["Sector Type"] === sector).map((d) => d.State))
+  );
+  const socitiesCount = new Array(states.length).fill(0);
+
+  states.forEach((state, i) => {
+    data.forEach((d) => {
+      if (d.State === state) socitiesCount[i]++;
+    });
+  });
+  const res = {};
+  for (let i = 0; i < states.length; i++) {
+    res[states[i]] = socitiesCount[i];
+  }
+  res.type = `${sector}`;
+  return Object.keys(res).length > 1 ? res : null;
 }
 
 export function noOfRegPerYear() {

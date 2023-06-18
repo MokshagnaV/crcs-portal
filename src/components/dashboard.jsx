@@ -4,6 +4,7 @@ import {
   socitiesCountAccToStates,
   socitiesCountAccToDistrict,
   socitiesCountAccToSector,
+  stateCountAccToSector,
   noOfRegPerYear,
 } from "../services/chartServices/dataService";
 import BarChart from "./common/barChart";
@@ -16,13 +17,18 @@ const Dashboard = (props) => {
   const [barChartData, setBarChartData] = useState(socitiesCountAccToStates());
   const [barDrill, setBarDrill] = useState("none");
 
-  const [pieChartData] = useState(socitiesCountAccToSector());
+  const [pieChartData, setPieChartData] = useState(socitiesCountAccToSector());
+  const [pieDrill, setPieDrill] = useState("none");
+
   const [lineChartData] = useState(noOfRegPerYear());
   const [order, setOrder] = useState(0);
 
   const barRef = useRef();
   const pieRef = useRef();
   const lineRef = useRef();
+
+  stateCountAccToSector("Agro");
+
   const handleBarClick = (e, data) => {
     if (getElementAtEvent(barRef.current, e).length > 0) {
       const [{ index }] = getElementAtEvent(barRef.current, e);
@@ -38,7 +44,11 @@ const Dashboard = (props) => {
     if (getElementAtEvent(pieRef.current, e).length > 0) {
       const [{ index }] = getElementAtEvent(pieRef.current, e);
       const label = data.labels[index];
-      console.log(label);
+      if (stateCountAccToSector(label)) {
+        const districtsData = stateCountAccToSector(label);
+        setPieChartData(districtsData);
+        setPieDrill("true");
+      }
     }
   };
   const handleLineClick = (e, data) => {
@@ -52,9 +62,14 @@ const Dashboard = (props) => {
   const handleChange = (e) => {
     setOrder(parseInt(e.currentTarget.value));
   };
-  const handleDrill = () => {
+  const handleBarDrill = () => {
     setBarChartData(socitiesCountAccToStates());
     setBarDrill("none");
+  };
+
+  const handlePieDrill = (e) => {
+    setPieChartData(socitiesCountAccToSector());
+    setPieDrill("none");
   };
 
   const getBarData = (sortOrder) => {
@@ -86,14 +101,17 @@ const Dashboard = (props) => {
   };
 
   const getPieData = () => {
-    const dataArray = Object.entries(pieChartData);
+    const originalPieData = { ...pieChartData };
+    const type = originalPieData.type;
+    delete originalPieData.type;
+    const dataArray = Object.entries(originalPieData);
     const pieData = Object.fromEntries(dataArray.sort(([, a], [, b]) => b - a));
 
     const res = {
       labels: Object.keys(pieData),
       datasets: [
         {
-          label: "No. of Socities in Sector",
+          label: "No. of Socities in " + type,
           data: Object.values(pieData),
           borderWidth: 1,
         },
@@ -122,7 +140,7 @@ const Dashboard = (props) => {
     <Grid gridTemplateColumns={"repeat(6, 1fr)"}>
       <SideBar />
       <GridItem colSpan="5">
-        <Box display="flex">
+        <Box display="flex" height="fit-content">
           <Box flex={1} maxW="50%">
             <Select onChange={handleChange} value={order} w="300px">
               <option value={0}>Select Options</option>
@@ -133,7 +151,7 @@ const Dashboard = (props) => {
               chartData={getBarData(order)}
               handleClick={(e) => handleBarClick(e, getBarData(order))}
               chartRef={barRef}
-              handleDrill={handleDrill}
+              handleDrill={handleBarDrill}
               display={barDrill}
             />
           </Box>
@@ -142,6 +160,8 @@ const Dashboard = (props) => {
               chartData={getPieData()}
               handleClick={(e) => handlePieClick(e, getPieData())}
               chartRef={pieRef}
+              handleDrill={handlePieDrill}
+              display={pieDrill}
             />
           </Box>
         </Box>

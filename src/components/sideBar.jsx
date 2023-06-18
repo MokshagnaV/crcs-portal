@@ -18,7 +18,6 @@ const SideBar = (props) => {
   return (
     <Container
       as="aside"
-      h="100vh"
       bg={colorMode === "light" ? "purple.200" : "purple.800"}
     >
       <Heading>Dashboard</Heading>
