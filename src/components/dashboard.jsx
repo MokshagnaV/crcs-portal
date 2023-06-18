@@ -6,6 +6,7 @@ import {
   socitiesCountAccToSector,
   stateCountAccToSector,
   noOfRegPerYear,
+  barAndPirDataAccToYear,
 } from "../services/chartServices/dataService";
 import BarChart from "./common/barChart";
 import { getElementAtEvent } from "react-chartjs-2";
@@ -16,12 +17,13 @@ import LineChart from "./common/lineChart";
 const Dashboard = (props) => {
   const [barChartData, setBarChartData] = useState(socitiesCountAccToStates());
   const [barDrill, setBarDrill] = useState("none");
+  const [order, setOrder] = useState(0);
 
   const [pieChartData, setPieChartData] = useState(socitiesCountAccToSector());
   const [pieDrill, setPieDrill] = useState("none");
 
   const [lineChartData] = useState(noOfRegPerYear());
-  const [order, setOrder] = useState(0);
+  const [lineDrill, setLineDrill] = useState("none");
 
   const barRef = useRef();
   const pieRef = useRef();
@@ -54,8 +56,11 @@ const Dashboard = (props) => {
   const handleLineClick = (e, data) => {
     if (getElementAtEvent(lineRef.current, e).length > 0) {
       const [{ index }] = getElementAtEvent(lineRef.current, e);
-      const label = data.labels[index];
-      console.log(label);
+      const label = parseInt(data.labels[index]);
+      const { pie, bar } = barAndPirDataAccToYear(label);
+      setBarChartData(bar);
+      setPieChartData(pie);
+      setLineDrill("true");
     }
   };
 
@@ -70,6 +75,12 @@ const Dashboard = (props) => {
   const handlePieDrill = (e) => {
     setPieChartData(socitiesCountAccToSector());
     setPieDrill("none");
+  };
+
+  const handleLineDrill = () => {
+    setPieChartData(socitiesCountAccToSector());
+    setBarChartData(socitiesCountAccToStates());
+    setLineDrill("none");
   };
 
   const getBarData = (sortOrder) => {
@@ -170,6 +181,8 @@ const Dashboard = (props) => {
             chartData={getLineData()}
             handleClick={(e) => handleLineClick(e, getLineData())}
             chartRef={lineRef}
+            handleDrill={handleLineDrill}
+            display={lineDrill}
           />
         </Box>
       </GridItem>

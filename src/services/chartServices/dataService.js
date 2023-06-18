@@ -1,8 +1,8 @@
 import dataSet from "../../dummydataset.json";
 
-const data = dataSet;
+const actualData = dataSet;
 
-export function socitiesCountAccToStates() {
+export function socitiesCountAccToStates(data = actualData) {
   const states = Array.from(new Set(data.map((d) => d.State)));
   const socitiesCount = new Array(states.length).fill(0);
 
@@ -21,13 +21,13 @@ export function socitiesCountAccToStates() {
 
 export function socitiesCountAccToDistrict(state) {
   const districts = Array.from(
-    new Set(data.filter((d) => d.State === state).map((d) => d.District))
+    new Set(actualData.filter((d) => d.State === state).map((d) => d.District))
   );
 
   const socitiesCount = new Array(districts.length).fill(0);
 
   districts.forEach((district, i) => {
-    data.forEach((d) => {
+    actualData.forEach((d) => {
       if (d.District === district) socitiesCount[i]++;
     });
   });
@@ -39,7 +39,7 @@ export function socitiesCountAccToDistrict(state) {
   return Object.keys(res).length > 1 ? res : null;
 }
 
-export function socitiesCountAccToSector() {
+export function socitiesCountAccToSector(data = actualData) {
   const sectors = Array.from(new Set(data.map((d) => d["Sector Type"])));
   const socitiesCount = new Array(sectors.length).fill(0);
 
@@ -58,12 +58,14 @@ export function socitiesCountAccToSector() {
 
 export function stateCountAccToSector(sector) {
   const states = Array.from(
-    new Set(data.filter((d) => d["Sector Type"] === sector).map((d) => d.State))
+    new Set(
+      actualData.filter((d) => d["Sector Type"] === sector).map((d) => d.State)
+    )
   );
   const socitiesCount = new Array(states.length).fill(0);
 
   states.forEach((state, i) => {
-    data.forEach((d) => {
+    actualData.forEach((d) => {
       if (d.State === state) socitiesCount[i]++;
     });
   });
@@ -78,7 +80,7 @@ export function stateCountAccToSector(sector) {
 export function noOfRegPerYear() {
   const years = Array.from(
     new Set(
-      data.map((d) => {
+      actualData.map((d) => {
         return new Date(d["Date of Registration"]).getFullYear();
       })
     )
@@ -86,7 +88,7 @@ export function noOfRegPerYear() {
 
   const socitiesCount = new Array(years.length).fill(0);
   years.forEach((y, i) => {
-    data.forEach((d) => {
+    actualData.forEach((d) => {
       if (new Date(d["Date of Registration"]).getFullYear() === y)
         socitiesCount[i]++;
     });
@@ -96,5 +98,17 @@ export function noOfRegPerYear() {
   for (let i = 0; i < years.length; i++) {
     res[years[i]] = socitiesCount[i];
   }
+  return res;
+}
+
+export function barAndPirDataAccToYear(year) {
+  const data = actualData.filter(
+    (d) => new Date(d["Date of Registration"]).getFullYear() === year
+  );
+  console.log(data);
+  const res = {
+    bar: socitiesCountAccToStates(data),
+    pie: socitiesCountAccToSector(data),
+  };
   return res;
 }
