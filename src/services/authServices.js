@@ -10,7 +10,7 @@ function getJwt() {
 
 async function register(regData) {
   const { data } = await httpService.post(
-    config.apiEndPoint + "registration/",
+    config.apiEndPoint + "registration_page/",
     regData
   );
   loginWithJwt(data.access_token);

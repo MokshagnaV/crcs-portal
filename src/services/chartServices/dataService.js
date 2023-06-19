@@ -2,7 +2,18 @@ import dataSet from "../../dummydataset.json";
 
 const actualData = dataSet;
 
-export function socitiesCountAccToStates(data = actualData) {
+export function getData() {
+  return actualData;
+}
+
+export function getDataOfYear(year) {
+  return actualData.filter(
+    (d) => new Date(d["Date of Registration"]).getFullYear() === year
+  );
+}
+
+export function socitiesCountAccToStates(data) {
+  console.log(data);
   const states = Array.from(new Set(data.map((d) => d.State)));
   const socitiesCount = new Array(states.length).fill(0);
 
@@ -39,7 +50,7 @@ export function socitiesCountAccToDistrict(state) {
   return Object.keys(res).length > 1 ? res : null;
 }
 
-export function socitiesCountAccToSector(data = actualData) {
+export function socitiesCountAccToSector(data) {
   const sectors = Array.from(new Set(data.map((d) => d["Sector Type"])));
   const socitiesCount = new Array(sectors.length).fill(0);
 
@@ -85,7 +96,6 @@ export function noOfRegPerYear() {
       })
     )
   );
-
   const socitiesCount = new Array(years.length).fill(0);
   years.forEach((y, i) => {
     actualData.forEach((d) => {
