@@ -11,7 +11,7 @@ import {
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
-import formDataToJSON from "../services/getFormData";
+import { formDataToJSON } from "../services/getFormData";
 import authServices from "../services/authServices";
 import { useDispatch } from "react-redux";
 import { userActions } from "../store/userSlice";

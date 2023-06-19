@@ -15,13 +15,26 @@ import {
   AlertIcon,
   useToast,
 } from "@chakra-ui/react";
-import formDataToJSON from "../services/getFormData";
+import {
+  formDataToJSON,
+  getDistricts,
+  getStates,
+  getSectors,
+} from "../services/getFormData";
 import authServices from "../services/authServices";
 import { useDispatch } from "react-redux";
 import { userActions } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Registration = (props) => {
+  const [states, setStates] = useState([]);
+  const [districts, setDistricts] = useState([]);
+
+  useEffect(() => {
+    getStates().then((data) => setStates(data));
+  }, []);
+
   const toast = useToast();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -46,6 +59,13 @@ const Registration = (props) => {
     }
   };
 
+  const stateChange = async (e) => {
+    const state = e.currentTarget.value;
+    const districts = await getDistricts(state);
+    setDistricts(districts);
+  };
+  // getDistricts("Telangana");
+  // getStates();
   return (
     <Flex flexDirection="column">
       <Container maxW="4xl">
@@ -65,10 +85,16 @@ const Registration = (props) => {
             <Box flexGrow="1">
               <FormControl isRequired>
                 <FormLabel>Select State (Head Quater) :</FormLabel>
-                <Select placeholder="Select option" name="state">
-                  <option value="option1">Option 1</option>
-                  <option value="option2">Option 2</option>
-                  <option value="option3">Option 3</option>
+                <Select
+                  placeholder="Select option"
+                  onChange={stateChange}
+                  name="state"
+                >
+                  {states.map((s) => (
+                    <option key={s.id} value={s.name}>
+                      {s.name}
+                    </option>
+                  ))}
                 </Select>
               </FormControl>
             </Box>
@@ -76,9 +102,11 @@ const Registration = (props) => {
               <FormControl isRequired>
                 <FormLabel>Select District :</FormLabel>
                 <Select placeholder="Select option" name="district">
-                  <option value="option1">Option 1</option>
-                  <option value="option2">Option 2</option>
-                  <option value="option3">Option 3</option>
+                  {districts.map((d) => (
+                    <option key={d.id} value={d.name}>
+                      {d.name}
+                    </option>
+                  ))}
                 </Select>
               </FormControl>
             </Box>
@@ -87,9 +115,11 @@ const Registration = (props) => {
             <FormControl isRequired>
               <FormLabel>Select Type / Class of the Society :</FormLabel>
               <Select placeholder="Select option" name="type">
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
+                {getSectors().map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
               </Select>
             </FormControl>
           </Stack>
