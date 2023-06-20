@@ -1,6 +1,5 @@
 import { Box, Button, Select } from "@chakra-ui/react";
-import { Bar } from "react-chartjs-2";
-import { getElementAtEvent } from "react-chartjs-2";
+import { Bar, getElementAtEvent } from "react-chartjs-2";
 import { useEffect, useRef, useState } from "react";
 import {
   socitiesCountAccToStates,
@@ -75,7 +74,7 @@ const BarChart = ({ socitiesData }) => {
       <Select
         onChange={handleChange}
         value={order}
-        w="300px"
+        w="fit-content"
         position="absolute"
         left="2%"
         top="2%"

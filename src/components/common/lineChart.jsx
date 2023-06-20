@@ -1,31 +1,41 @@
 import { Box, Button } from "@chakra-ui/react";
-import { Line } from "react-chartjs-2";
-import { getElementAtEvent } from "react-chartjs-2";
+import { Line, getElementAtEvent } from "react-chartjs-2";
 import { useRef, useState } from "react";
 import {
   getData,
   getDataOfYear,
   noOfRegPerYear,
 } from "../../services/chartServices/dataService";
+import { useDispatch } from "react-redux";
+import { socitiesActions } from "../../store/socitiesSlice";
 
-const LineChart = ({ setSocitiesData, setYear }) => {
+const LineChart = (props) => {
   const [chartData] = useState(noOfRegPerYear());
   const [drill, setDrill] = useState("none");
   const ref = useRef();
+
+  const dispatch = useDispatch();
+
+  // const { socities, year } = useSelector((state) => state.socities);
 
   const handleClick = (e, data) => {
     if (getElementAtEvent(ref.current, e).length > 0) {
       const [{ index }] = getElementAtEvent(ref.current, e);
       const label = parseInt(data.labels[index]);
-      setSocitiesData(getDataOfYear(label));
-      setYear(data.labels[index]);
+      console.log(getDataOfYear(label));
+      dispatch(socitiesActions.setSocities(getDataOfYear(label)));
+      // setSocitiesData(getDataOfYear(label));
+      dispatch(socitiesActions.setYear(data.labels[index]));
+      // setYear(data.labels[index]);
       setDrill("true");
     }
   };
 
   const handleDrill = () => {
-    setSocitiesData(getData());
-    setYear("");
+    dispatch(socitiesActions.setSocities(getData()));
+    // setSocitiesData(getData());
+    dispatch(socitiesActions.setYear(""));
+    // setYear("");
     setDrill("none");
   };
 

@@ -21,15 +21,20 @@ const SideBar = (props) => {
       minH={{ md: "100vh" }}
       bg={colorMode === "light" ? "purple.200" : "purple.800"}
     >
-      <Heading>Dashboard</Heading>
+      <Heading>
+        <NavLink to="/">Dashboard</NavLink>
+      </Heading>
       <List>
         {!user && (
           <>
             <ListItem>
-              <NavLink to={"/login"}> Login </NavLink>
+              <NavLink to="/login"> Login </NavLink>
             </ListItem>
             <ListItem>
-              <NavLink to={"/registration"}> Registration </NavLink>
+              <NavLink to="/registration"> Registration </NavLink>
+            </ListItem>
+            <ListItem>
+              <NavLink to="/socities"> Socities </NavLink>
             </ListItem>
           </>
         )}

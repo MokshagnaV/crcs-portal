@@ -1,7 +1,6 @@
-import { Box, Button } from "@chakra-ui/react";
-import { Pie } from "react-chartjs-2";
-import { getElementAtEvent } from "react-chartjs-2";
 import { useRef, useState, useEffect } from "react";
+import { Box, Button } from "@chakra-ui/react";
+import { Pie, getElementAtEvent } from "react-chartjs-2";
 import {
   socitiesCountAccToSector,
   stateCountAccToSector,
@@ -72,6 +71,7 @@ const PieChart = ({ socitiesData }) => {
         Drill back
       </Button>
       <Pie
+        redraw={true}
         data={getData()}
         onClick={(e) => handleClick(e, getData())}
         ref={ref}
