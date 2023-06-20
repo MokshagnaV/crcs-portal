@@ -12,7 +12,7 @@ export function getDataOfYear(year) {
   );
 }
 
-export function socitiesCountAccToStates(data) {
+export function socitiesCountAccToStates(data = actualData) {
   const states = Array.from(new Set(data.map((d) => d.State)));
   const socitiesCount = new Array(states.length).fill(0);
 
@@ -48,7 +48,7 @@ export function socitiesCountAccToDistrict(state, data) {
   return Object.keys(res).length > 1 ? res : null;
 }
 
-export function socitiesCountAccToSector(data) {
+export function socitiesCountAccToSector(data = actualData) {
   const sectors = Array.from(new Set(data.map((d) => d["Sector Type"])));
   const socitiesCount = new Array(sectors.length).fill(0);
 
