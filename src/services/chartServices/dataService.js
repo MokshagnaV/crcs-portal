@@ -13,7 +13,6 @@ export function getDataOfYear(year) {
 }
 
 export function socitiesCountAccToStates(data) {
-  console.log(data);
   const states = Array.from(new Set(data.map((d) => d.State)));
   const socitiesCount = new Array(states.length).fill(0);
 
@@ -30,15 +29,14 @@ export function socitiesCountAccToStates(data) {
   return res;
 }
 
-export function socitiesCountAccToDistrict(state) {
-  const districts = Array.from(
-    new Set(actualData.filter((d) => d.State === state).map((d) => d.District))
-  );
+export function socitiesCountAccToDistrict(state, data) {
+  const socitiesOfState = data.filter((d) => d.State === state);
+  const districts = Array.from(new Set(socitiesOfState.map((d) => d.District)));
 
   const socitiesCount = new Array(districts.length).fill(0);
 
   districts.forEach((district, i) => {
-    actualData.forEach((d) => {
+    data.forEach((d) => {
       if (d.District === district) socitiesCount[i]++;
     });
   });
@@ -67,16 +65,13 @@ export function socitiesCountAccToSector(data) {
   return res;
 }
 
-export function stateCountAccToSector(sector) {
-  const states = Array.from(
-    new Set(
-      actualData.filter((d) => d["Sector Type"] === sector).map((d) => d.State)
-    )
-  );
+export function stateCountAccToSector(sector, data) {
+  const socitiesOfSector = data.filter((d) => d["Sector Type"] === sector);
+  const states = Array.from(new Set(socitiesOfSector.map((d) => d.State)));
   const socitiesCount = new Array(states.length).fill(0);
 
   states.forEach((state, i) => {
-    actualData.forEach((d) => {
+    socitiesOfSector.forEach((d) => {
       if (d.State === state) socitiesCount[i]++;
     });
   });
@@ -108,17 +103,5 @@ export function noOfRegPerYear() {
   for (let i = 0; i < years.length; i++) {
     res[years[i]] = socitiesCount[i];
   }
-  return res;
-}
-
-export function barAndPirDataAccToYear(year) {
-  const data = actualData.filter(
-    (d) => new Date(d["Date of Registration"]).getFullYear() === year
-  );
-  console.log(data);
-  const res = {
-    bar: socitiesCountAccToStates(data),
-    pie: socitiesCountAccToSector(data),
-  };
   return res;
 }

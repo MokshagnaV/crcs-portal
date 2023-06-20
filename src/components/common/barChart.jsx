@@ -16,12 +16,12 @@ const BarChart = ({ socitiesData }) => {
 
   const ref = useRef();
 
-  const handleClick = (e, data) => {
+  const handleClick = (e, barData) => {
     if (getElementAtEvent(ref.current, e).length > 0) {
       const [{ index }] = getElementAtEvent(ref.current, e);
-      const label = data.labels[index];
-      if (socitiesCountAccToDistrict(label)) {
-        const districtsData = socitiesCountAccToDistrict(label);
+      const label = barData.labels[index];
+      if (socitiesCountAccToDistrict(label, data)) {
+        const districtsData = socitiesCountAccToDistrict(label, data);
         setChartData(districtsData);
         setDrill("true");
       }
@@ -71,41 +71,47 @@ const BarChart = ({ socitiesData }) => {
   }, [socitiesData]);
 
   return (
-    <Box>
-      <Select onChange={handleChange} value={order} w="300px">
-        <option value={0}>Select Options</option>
+    <Box position="relative">
+      <Select
+        onChange={handleChange}
+        value={order}
+        w="300px"
+        position="absolute"
+        left="2%"
+        top="2%"
+        variant="filled"
+      >
+        <option value="0">Select Order</option>
         <option value="1">Ascending Order</option>
         <option value="-1">Descending order</option>
       </Select>
-      <Box position="relative">
-        <Button
-          size="xs"
-          position="absolute"
-          right="2px"
-          top="2px"
-          onClick={handleDrill}
-          display={drill}
-        >
-          Drill down
-        </Button>
-        <Bar
-          data={getData(order)}
-          onClick={(e) => handleClick(e, getData(order))}
-          ref={ref}
-          options={{
-            onHover: (e, chartElement) => {
-              if (chartElement[0]) e.native.target.style.cursor = "pointer";
-              else e.native.target.style.cursor = "default";
+      <Button
+        size="xs"
+        position="absolute"
+        right="2%"
+        top="2%"
+        onClick={handleDrill}
+        display={drill}
+      >
+        Drill back
+      </Button>
+      <Bar
+        data={getData(order)}
+        onClick={(e) => handleClick(e, getData(order))}
+        ref={ref}
+        options={{
+          onHover: (e, chartElement) => {
+            if (chartElement[0]) e.native.target.style.cursor = "pointer";
+            else e.native.target.style.cursor = "default";
+          },
+          plugins: {
+            title: {
+              display: true,
+              text: "Number of socities registered in each State/Districts",
             },
-            plugins: {
-              title: {
-                display: true,
-                text: "Number of socities registered in each State/Districts",
-              },
-            },
-          }}
-        />
-      </Box>
+          },
+        }}
+      />
     </Box>
   );
 };

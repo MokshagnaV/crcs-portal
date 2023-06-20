@@ -8,7 +8,7 @@ import {
   noOfRegPerYear,
 } from "../../services/chartServices/dataService";
 
-const LineChart = ({ setSocitiesData }) => {
+const LineChart = ({ setSocitiesData, setYear }) => {
   const [chartData] = useState(noOfRegPerYear());
   const [drill, setDrill] = useState("none");
   const ref = useRef();
@@ -18,12 +18,14 @@ const LineChart = ({ setSocitiesData }) => {
       const [{ index }] = getElementAtEvent(ref.current, e);
       const label = parseInt(data.labels[index]);
       setSocitiesData(getDataOfYear(label));
+      setYear(data.labels[index]);
       setDrill("true");
     }
   };
 
   const handleDrill = () => {
     setSocitiesData(getData());
+    setYear("");
     setDrill("none");
   };
 
@@ -47,12 +49,12 @@ const LineChart = ({ setSocitiesData }) => {
       <Button
         size="xs"
         position="absolute"
-        right="2px"
-        top="2px"
+        right="2%"
+        top="2%"
         onClick={handleDrill}
         display={drill}
       >
-        Drill down
+        Drill back
       </Button>
       <Line
         data={getLineData()}

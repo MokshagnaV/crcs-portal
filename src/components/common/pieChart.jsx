@@ -15,12 +15,12 @@ const PieChart = ({ socitiesData }) => {
 
   const ref = useRef();
 
-  const handleClick = (e, data) => {
+  const handleClick = (e, pieData) => {
     if (getElementAtEvent(ref.current, e).length > 0) {
       const [{ index }] = getElementAtEvent(ref.current, e);
-      const label = data.labels[index];
-      if (stateCountAccToSector(label)) {
-        const districtsData = stateCountAccToSector(label);
+      const label = pieData.labels[index];
+      if (stateCountAccToSector(label, data)) {
+        const districtsData = stateCountAccToSector(label, data);
         setChartData(districtsData);
         setDrill("true");
       }
@@ -43,7 +43,7 @@ const PieChart = ({ socitiesData }) => {
       labels: Object.keys(Data),
       datasets: [
         {
-          label: "No. of Socities in " + type,
+          label: "No. of Socities of " + type,
           data: Object.values(Data),
           borderWidth: 1,
         },
@@ -64,12 +64,12 @@ const PieChart = ({ socitiesData }) => {
       <Button
         size="xs"
         position="absolute"
-        right="2px"
-        top="2px"
+        right="2%"
+        bottom="2%"
         onClick={handleDrill}
         display={drill}
       >
-        Drill down
+        Drill back
       </Button>
       <Pie
         data={getData()}
@@ -81,6 +81,10 @@ const PieChart = ({ socitiesData }) => {
             else e.native.target.style.cursor = "default";
           },
           plugins: {
+            legend: {
+              display: true,
+              position: "left",
+            },
             title: {
               display: true,
               text: "Number of socities registered in each sector",

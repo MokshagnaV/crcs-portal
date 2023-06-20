@@ -64,8 +64,7 @@ const Registration = (props) => {
     const districts = await getDistricts(state);
     setDistricts(districts);
   };
-  // getDistricts("Telangana");
-  // getStates();
+
   return (
     <Flex flexDirection="column">
       <Container maxW="4xl">
