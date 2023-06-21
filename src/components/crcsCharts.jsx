@@ -1,4 +1,4 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Card, Flex, Heading } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { socitiesActions } from "../store/socitiesSlice";
 import BarChart from "./common/barChart";
@@ -20,17 +20,25 @@ const CrcsCharts = (props) => {
         Total Number of Socities
         {year && <span> in the Year {year}</span>}: {socities.length}
       </Heading>
-      <Box>
-        <BarChart socitiesData={socities} />
-      </Box>
-      <Box display="flex" flexWrap="wrap">
-        <Box minW={{ md: "60%" }}>
-          <LineChart />
+      <Flex justify="center" margin="2rem">
+        <Box width={"85%"} borderRadius="xl">
+          <Card padding={"1rem"}>
+            <BarChart socitiesData={socities} />
+          </Card>
         </Box>
-        <Box minW={{ md: "40%" }}>
-          <PieChart socitiesData={socities} />
+      </Flex>
+      <Flex margin="2rem" wrap="wrap">
+        <Box flexGrow="1" margin="1rem" borderRadius="xl" alignItems="center">
+          <Card padding={"1rem"}>
+            <LineChart />
+          </Card>
         </Box>
-      </Box>
+        <Box flexGrow="1" margin="1rem" borderRadius="xl">
+          <Card padding={"1rem"}>
+            <PieChart socitiesData={socities} />
+          </Card>
+        </Box>
+      </Flex>
     </Box>
   );
 };

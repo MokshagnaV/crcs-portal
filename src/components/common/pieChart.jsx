@@ -31,12 +31,26 @@ const PieChart = ({ socitiesData }) => {
     setDrill("none");
   };
 
+  const getColor = () => {
+    const r = Math.floor(Math.random() * 200);
+    const g = Math.floor(Math.random() * 200);
+    const b = Math.floor(Math.random() * 200);
+    const color = "rgb(" + r + ", " + g + ", " + b + ")";
+    return color;
+  };
+
   const getData = () => {
     const originalData = { ...ChartData };
     const type = originalData.type;
     delete originalData.type;
     const dataArray = Object.entries(originalData);
     const Data = Object.fromEntries(dataArray.sort(([, a], [, b]) => b - a));
+
+    const colors = [];
+
+    for (let i = 0; i < Object.values(Data).length; i++) {
+      colors.push(getColor());
+    }
 
     const res = {
       labels: Object.keys(Data),
@@ -45,6 +59,7 @@ const PieChart = ({ socitiesData }) => {
           label: "No. of Socities of " + type,
           data: Object.values(Data),
           borderWidth: 1,
+          backgroundColor: colors,
         },
       ],
       hoverOffset: 1,
@@ -64,14 +79,13 @@ const PieChart = ({ socitiesData }) => {
         size="xs"
         position="absolute"
         right="2%"
-        bottom="2%"
+        top="2%"
         onClick={handleDrill}
         display={drill}
       >
         Drill back
       </Button>
       <Pie
-        redraw={true}
         data={getData()}
         onClick={(e) => handleClick(e, getData())}
         ref={ref}

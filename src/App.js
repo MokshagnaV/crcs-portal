@@ -6,6 +6,7 @@ import Registration from "./components/registration";
 import Dashboard from "./components/dashboard";
 import Socities from "./components/socities";
 import CrcsCharts from "./components/crcsCharts";
+import AnnualReturns from "./components/annualReturns";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" Component={Dashboard}>
             <Route path="/socities" Component={Socities} />
+            <Route path="/annual-returns" Component={AnnualReturns} />
             <Route path="/" Component={CrcsCharts} />
           </Route>
           <Route path="/login" Component={Login} />

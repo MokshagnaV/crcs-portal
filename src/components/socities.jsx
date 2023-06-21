@@ -150,13 +150,26 @@ const Socities = (props) => {
           </form>
         </GridItem>
         <GridItem colSpan="5">
-          <TableContainer overflowY="scroll" maxH="70vh">
-            <Table>
-              <TableCaption>Data of Socities</TableCaption>
-              <TableHead />
-              <TableBody dataSet={getFilteredData()} />
-            </Table>
-          </TableContainer>
+          <Card m="1rem">
+            <TableContainer overflowY="scroll" maxH="70vh" m="1rem">
+              <Table>
+                <TableCaption>Data of Socities</TableCaption>
+                <TableHead
+                  data={[
+                    "SNo",
+                    "Name of Society",
+                    "Sector Type",
+                    "Date of Registration",
+                    "State",
+                    "District",
+                    "Address",
+                    "Area of Operation",
+                  ]}
+                />
+                <TableBody dataSet={getFilteredData()} />
+              </Table>
+            </TableContainer>
+          </Card>
         </GridItem>
       </Grid>
     </Box>

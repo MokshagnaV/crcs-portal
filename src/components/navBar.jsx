@@ -282,4 +282,5 @@ const MobileNavItem = (NavItem) => {
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/" },
   { label: "Socities", href: "/socities" },
+  { label: "Annual Returns", href: "/annual-returns" },
 ];

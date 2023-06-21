@@ -1,6 +1,11 @@
 import dataSet from "../../dummydataset.json";
+import mscs from "../../mscs.json";
 
 const actualData = dataSet;
+
+export function getAnnualReturnsData() {
+  return mscs;
+}
 
 export function getData() {
   return actualData;
