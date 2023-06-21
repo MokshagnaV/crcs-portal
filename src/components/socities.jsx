@@ -11,6 +11,7 @@ import {
   Text,
   Select,
   Heading,
+  Divider,
 } from "@chakra-ui/react";
 import {
   formDataToJSON,
@@ -69,7 +70,7 @@ const Socities = (props) => {
 
   return (
     <Box>
-      <Heading>
+      <Heading textAlign="center" margin="1rem">
         {!Object.entries(filtering).length && <span>All socities</span>}
         {Object.entries(filtering).length !== 0 && (
           <span>
@@ -78,6 +79,7 @@ const Socities = (props) => {
           </span>
         )}
       </Heading>
+      <Divider />
       <Grid templateColumns={"repeat(6, 1fr)"}>
         <GridItem
           colSpan="6"

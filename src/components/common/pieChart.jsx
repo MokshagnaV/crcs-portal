@@ -31,13 +31,32 @@ const PieChart = ({ socitiesData }) => {
     setDrill("none");
   };
 
-  const getColor = () => {
-    const r = Math.floor(Math.random() * 200);
-    const g = Math.floor(Math.random() * 200);
-    const b = Math.floor(Math.random() * 200);
-    const color = "rgb(" + r + ", " + g + ", " + b + ")";
-    return color;
-  };
+  function getColors(length) {
+    let pallet = [
+      "#4299e1",
+      "#F56565",
+      "#ED8936",
+      "#FEEBC8",
+      "#4FD1C5",
+      "#805AD5",
+      "#A0AEC0",
+      "#4299e1",
+      "#D53F8C",
+      "#F6E05E",
+      "#E53E3E",
+      "#2b6cb0",
+      "#B83280",
+      "#276749",
+      "#AAAAAA",
+    ];
+    let colors = [];
+
+    for (let i = 0; i < length; i++) {
+      colors.push(pallet[i % (pallet.length - 1)]);
+    }
+
+    return colors;
+  }
 
   const getData = () => {
     const originalData = { ...ChartData };
@@ -46,12 +65,6 @@ const PieChart = ({ socitiesData }) => {
     const dataArray = Object.entries(originalData);
     const Data = Object.fromEntries(dataArray.sort(([, a], [, b]) => b - a));
 
-    const colors = [];
-
-    for (let i = 0; i < Object.values(Data).length; i++) {
-      colors.push(getColor());
-    }
-
     const res = {
       labels: Object.keys(Data),
       datasets: [
@@ -59,7 +72,7 @@ const PieChart = ({ socitiesData }) => {
           label: "No. of Socities of " + type,
           data: Object.values(Data),
           borderWidth: 1,
-          backgroundColor: colors,
+          backgroundColor: getColors(Object.keys(Data).length),
         },
       ],
       hoverOffset: 1,

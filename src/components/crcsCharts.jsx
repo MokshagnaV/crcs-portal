@@ -16,18 +16,18 @@ const CrcsCharts = (props) => {
   }, [dispatch]);
   return (
     <Box>
-      <Heading>
+      <Heading textAlign="center" margin="1rem">
         Total Number of Socities
         {year && <span> in the Year {year}</span>}: {socities.length}
       </Heading>
-      <Flex justify="center" margin="2rem">
+      <Flex justify="center" margin={{ md: "2rem" }}>
         <Box width={"85%"} borderRadius="xl">
           <Card padding={"1rem"}>
             <BarChart socitiesData={socities} />
           </Card>
         </Box>
       </Flex>
-      <Flex margin="2rem" wrap="wrap">
+      <Flex margin={{ md: "2rem" }} wrap="wrap">
         <Box flexGrow="1" margin="1rem" borderRadius="xl" alignItems="center">
           <Card padding={"1rem"}>
             <LineChart />

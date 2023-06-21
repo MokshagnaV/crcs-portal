@@ -15,6 +15,7 @@ import {
   useDisclosure,
   useColorMode,
   Avatar,
+  Heading,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -34,6 +35,18 @@ export default function NavBar() {
 
   return (
     <Box>
+      <Box
+        textAlign="center"
+        bg={useColorModeValue("white", "gray.800")}
+        color={useColorModeValue("gray.600", "white")}
+      >
+        <Heading as="h1" fontFamily="News Cycle">
+          MULTI-STATE CO-OPERATIVE SOCIETIES
+        </Heading>
+        <Text fontFamily="News Cycle">
+          Ministry of Cooperation, Govt. of India
+        </Text>
+      </Box>
       <Flex
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
@@ -283,4 +296,29 @@ const NAV_ITEMS = [
   { label: "Dashboard", href: "/" },
   { label: "Socities", href: "/socities" },
   { label: "Annual Returns", href: "/annual-returns" },
+  // {
+  //   label: "Forms",
+  //   children: [
+  //     {
+  //       label: "Form I",
+  //       href: "#",
+  //     },
+  //     {
+  //       label: "Form II",
+  //       href: "#",
+  //     },
+  //     {
+  //       label: "Form III",
+  //       href: "#",
+  //     },
+  //     {
+  //       label: "Form IV",
+  //       href: "#",
+  //     },
+  //     {
+  //       label: "Form V",
+  //       href: "#",
+  //     },
+  //   ],
+  // },
 ];

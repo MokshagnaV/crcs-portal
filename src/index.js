@@ -8,11 +8,13 @@ import { Provider } from "react-redux";
 import store from "./store";
 import "./index.css";
 import App from "./App";
+import theme from "./theme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <ChakraProvider
+      theme={theme}
       toastOptions={{ defaultOptions: { position: "top-right" } }}
     >
       <React.StrictMode>

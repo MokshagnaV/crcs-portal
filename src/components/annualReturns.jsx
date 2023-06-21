@@ -31,7 +31,7 @@ const AnnualReturns = (props) => {
   // const years = [2016, 2017, 2018, 2019, 2020, 2021, 2022];
 
   const [dataset, setDataSet] = useState([]);
-  const [filtering] = useState({});
+  // const [filtering] = useState({});
   // const [higheshCount, setHighestCount] = useState({
   //   sector: { name: "", count: "" },
   //   state: { name: "", count: "" },
@@ -65,20 +65,13 @@ const AnnualReturns = (props) => {
     //       parseInt(filtering.yearFactor) ||
     //       !filtering.yearFactor)
     // );
-    console.log(dataset);
     return dataset.slice(0, 100);
   };
 
   return (
     <Box>
-      <Heading>
-        {!Object.entries(filtering).length && <span>All socities</span>}
-        {Object.entries(filtering).length !== 0 && (
-          <span>
-            All socities of {filtering.sectorFactor}, {filtering.stateFactor},{" "}
-            {filtering.yearFactor}
-          </span>
-        )}
+      <Heading textAlign="center" margin="1rem">
+        Annual returns
       </Heading>
       <Grid templateColumns={"repeat(6, 1fr)"}>
         <GridItem colSpan="6">
