@@ -16,6 +16,8 @@ import {
   useColorMode,
   Avatar,
   Heading,
+  Image,
+  // Spacer,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -27,6 +29,7 @@ import {
 } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import crcsLogo from "../crcs-r.png";
 
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure();
@@ -35,18 +38,30 @@ export default function NavBar() {
 
   return (
     <Box>
-      <Box
+      <Flex
+        justify="center"
         textAlign="center"
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
+        px="2rem"
       >
-        <Heading as="h1" fontFamily="News Cycle">
-          MULTI-STATE CO-OPERATIVE SOCIETIES
-        </Heading>
-        <Text fontFamily="News Cycle">
-          Ministry of Cooperation, Govt. of India
-        </Text>
-      </Box>
+        <Image
+          src={crcsLogo}
+          boxSize="100px"
+          objectFit="cover"
+          alt="CRCS Logo"
+        />
+        <Flex flexDir="column" justify="center">
+          <Heading as="h1" fontFamily="News Cycle">
+            Ministry of Cooperation
+          </Heading>
+          <Text fontFamily="News Cycle">सहकारिता मंत्रालय </Text>
+        </Flex>
+        {/* <Spacer />
+        <Button as="a" href="#main" variant="link" size="xs">
+          Skip to main content
+        </Button> */}
+      </Flex>
       <Flex
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
@@ -294,7 +309,7 @@ const MobileNavItem = (NavItem) => {
 
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/" },
-  { label: "Socities", href: "/socities" },
+  { label: "Societies", href: "/societies" },
   { label: "Annual Returns", href: "/annual-returns" },
   // {
   //   label: "Forms",

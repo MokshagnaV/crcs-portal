@@ -5,6 +5,7 @@ import {
   TableContainer,
   Grid,
   GridItem,
+  useToast,
   // Card,
   // CardHeader,
   // CardBody,
@@ -12,6 +13,8 @@ import {
   // Select,
   Heading,
   Card,
+  Button,
+  Center,
 } from "@chakra-ui/react";
 // import {
 //   formDataToJSON,
@@ -20,16 +23,17 @@ import {
 // } from "../services/getFormData";
 import TableHead from "./common/tableHead";
 import TableBody from "./common/tableBody";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   getAnnualReturnsData,
   // socitiesCountAccToSector,
   // socitiesCountAccToStates,
 } from "../services/chartServices/dataService";
-
+import { useReactToPrint } from "react-to-print";
 const AnnualReturns = (props) => {
   // const years = [2016, 2017, 2018, 2019, 2020, 2021, 2022];
-
+  const toast = useToast();
+  const tableRef = useRef();
   const [dataset, setDataSet] = useState([]);
   // const [filtering] = useState({});
   // const [higheshCount, setHighestCount] = useState({
@@ -68,6 +72,18 @@ const AnnualReturns = (props) => {
     return dataset.slice(0, 100);
   };
 
+  const generatePdf = useReactToPrint({
+    content: () => tableRef.current,
+    documentTitle: "Annual returns",
+    onAfterPrint: () =>
+      toast({
+        title: "PDF Download initiated",
+        status: "success",
+        isClosable: true,
+        duration: 5000,
+      }),
+  });
+
   return (
     <Box>
       <Heading textAlign="center" margin="1rem">
@@ -77,15 +93,24 @@ const AnnualReturns = (props) => {
         <GridItem colSpan="6">
           <Card m="1rem">
             <TableContainer overflowY="scroll" maxH="70vh" m="1rem">
-              <Table>
-                <TableCaption>Data of Socities</TableCaption>
-                <TableHead
-                  data={["S No", "Name", "State/UT", "Year", "Updated ON"]}
-                />
-                <TableBody dataSet={getFilteredData()} />
-              </Table>
+              <div ref={tableRef} style={{ width: "100%" }}>
+                <Table variant="striped">
+                  <TableCaption>Data of Socities</TableCaption>
+                  <TableHead
+                    data={["S No", "Name", "State/UT", "Year", "Updated ON"]}
+                  />
+                  <TableBody dataSet={getFilteredData()} />
+                </Table>
+              </div>
             </TableContainer>
           </Card>
+        </GridItem>
+        <GridItem colSpan="6" padding="2rem">
+          <Center>
+            <Button colorScheme="blue" onClick={generatePdf}>
+              Download Pdf
+            </Button>
+          </Center>
         </GridItem>
       </Grid>
     </Box>

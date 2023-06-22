@@ -10,8 +10,7 @@ const TableBody = ({ dataSet }) => {
           </Td>
         </Tr>
       )}
-      {console.log(dataSet)}
-      {dataSet.length &&
+      {dataSet.length !== 0 &&
         dataSet[0].Address &&
         dataSet.map((d) => {
           return (
@@ -27,7 +26,7 @@ const TableBody = ({ dataSet }) => {
             </Tr>
           );
         })}
-      {dataSet.length &&
+      {dataSet.length !== 0 &&
         dataSet[0]["Updated ON"] &&
         dataSet.map((d) => {
           return (

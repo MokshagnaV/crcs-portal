@@ -1,4 +1,4 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Icon } from "@chakra-ui/react";
 import { Line, getElementAtEvent } from "react-chartjs-2";
 import { useRef, useState } from "react";
 import {
@@ -7,7 +7,8 @@ import {
   noOfRegPerYear,
 } from "../../services/chartServices/dataService";
 import { useDispatch } from "react-redux";
-import { socitiesActions } from "../../store/socitiesSlice";
+import { societiesActions } from "../../store/societiesSlice";
+import { ArrowUpIcon } from "@chakra-ui/icons";
 
 const LineChart = (props) => {
   const [chartData] = useState(noOfRegPerYear());
@@ -16,25 +17,25 @@ const LineChart = (props) => {
 
   const dispatch = useDispatch();
 
-  // const { socities, year } = useSelector((state) => state.socities);
+  // const { societies, year } = useSelector((state) => state.societies);
 
   const handleClick = (e, data) => {
     if (getElementAtEvent(ref.current, e).length > 0) {
       const [{ index }] = getElementAtEvent(ref.current, e);
       const label = parseInt(data.labels[index]);
       console.log(getDataOfYear(label));
-      dispatch(socitiesActions.setSocities(getDataOfYear(label)));
-      // setSocitiesData(getDataOfYear(label));
-      dispatch(socitiesActions.setYear(data.labels[index]));
+      dispatch(societiesActions.setSocieties(getDataOfYear(label)));
+      // setSocietiesData(getDataOfYear(label));
+      dispatch(societiesActions.setYear(data.labels[index]));
       // setYear(data.labels[index]);
       setDrill("true");
     }
   };
 
   const handleDrill = () => {
-    dispatch(socitiesActions.setSocities(getData()));
-    // setSocitiesData(getData());
-    dispatch(socitiesActions.setYear(""));
+    dispatch(societiesActions.setSocieties(getData()));
+    // setSocietiesData(getData());
+    dispatch(societiesActions.setYear(""));
     // setYear("");
     setDrill("none");
   };
@@ -63,8 +64,10 @@ const LineChart = (props) => {
         top="2%"
         onClick={handleDrill}
         display={drill}
+        variant="outline"
+        colorScheme="blue"
       >
-        Drill back
+        <Icon as={ArrowUpIcon} boxSize={6}></Icon>
       </Button>
       <Line
         data={getLineData()}
@@ -78,7 +81,7 @@ const LineChart = (props) => {
           plugins: {
             title: {
               display: true,
-              text: "Number of socities registered in each year",
+              text: "Number of societies registered in each year",
             },
           },
         }}

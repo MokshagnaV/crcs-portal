@@ -4,7 +4,7 @@ import Login from "./components/login";
 import Logout from "./components/logout";
 import Registration from "./components/registration";
 import Dashboard from "./components/dashboard";
-import Socities from "./components/socities";
+import Societies from "./components/societies";
 import CrcsCharts from "./components/crcsCharts";
 import AnnualReturns from "./components/annualReturns";
 
@@ -14,7 +14,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" Component={Dashboard}>
-            <Route path="/socities" Component={Socities} />
+            <Route path="/societies" Component={Societies} />
             <Route path="/annual-returns" Component={AnnualReturns} />
             <Route path="/" Component={CrcsCharts} />
           </Route>

@@ -1,15 +1,16 @@
 import { useRef, useState, useEffect } from "react";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Icon } from "@chakra-ui/react";
 import { Pie, getElementAtEvent } from "react-chartjs-2";
 import {
-  socitiesCountAccToSector,
+  societiesCountAccToSector,
   stateCountAccToSector,
 } from "../../services/chartServices/dataService";
+import { ArrowUpIcon } from "@chakra-ui/icons";
 
-const PieChart = ({ socitiesData }) => {
-  const [data, setData] = useState(socitiesData);
+const PieChart = ({ societiesData }) => {
+  const [data, setData] = useState(societiesData);
 
-  const [ChartData, setChartData] = useState(socitiesCountAccToSector(data));
+  const [ChartData, setChartData] = useState(societiesCountAccToSector(data));
   const [drill, setDrill] = useState("none");
 
   const ref = useRef();
@@ -27,7 +28,7 @@ const PieChart = ({ socitiesData }) => {
   };
 
   const handleDrill = (e) => {
-    setChartData(socitiesCountAccToSector(data));
+    setChartData(societiesCountAccToSector(data));
     setDrill("none");
   };
 
@@ -69,7 +70,7 @@ const PieChart = ({ socitiesData }) => {
       labels: Object.keys(Data),
       datasets: [
         {
-          label: "No. of Socities of " + type,
+          label: "No. of Societies of " + type,
           data: Object.values(Data),
           borderWidth: 1,
           backgroundColor: getColors(Object.keys(Data).length),
@@ -81,10 +82,10 @@ const PieChart = ({ socitiesData }) => {
   };
 
   useEffect(() => {
-    setData(socitiesData);
-    setChartData(socitiesCountAccToSector(socitiesData));
+    setData(societiesData);
+    setChartData(societiesCountAccToSector(societiesData));
     setDrill("none");
-  }, [socitiesData]);
+  }, [societiesData]);
 
   return (
     <Box pos="relative">
@@ -95,8 +96,10 @@ const PieChart = ({ socitiesData }) => {
         top="2%"
         onClick={handleDrill}
         display={drill}
+        variant="outline"
+        colorScheme="blue"
       >
-        Drill back
+        <Icon as={ArrowUpIcon} boxSize={6}></Icon>
       </Button>
       <Pie
         data={getData()}
@@ -114,7 +117,7 @@ const PieChart = ({ socitiesData }) => {
             },
             title: {
               display: true,
-              text: "Number of socities registered in each sector",
+              text: "Number of societies registered in each sector",
             },
           },
         }}

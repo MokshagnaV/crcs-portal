@@ -1,15 +1,16 @@
-import { Box, Button, Select } from "@chakra-ui/react";
+import { Box, Button, Icon, Select } from "@chakra-ui/react";
 import { Bar, getElementAtEvent } from "react-chartjs-2";
 import { useEffect, useRef, useState } from "react";
 import {
-  socitiesCountAccToStates,
-  socitiesCountAccToDistrict,
+  societiesCountAccToStates,
+  societiesCountAccToDistrict,
 } from "../../services/chartServices/dataService";
+import { ArrowUpIcon } from "@chakra-ui/icons";
 
-const BarChart = ({ socitiesData }) => {
-  const [data, setData] = useState(socitiesData);
+const BarChart = ({ societiesData }) => {
+  const [data, setData] = useState(societiesData);
 
-  const [ChartData, setChartData] = useState(socitiesCountAccToStates(data));
+  const [ChartData, setChartData] = useState(societiesCountAccToStates(data));
   const [drill, setDrill] = useState("none");
   const [order, setOrder] = useState(0);
 
@@ -19,8 +20,8 @@ const BarChart = ({ socitiesData }) => {
     if (getElementAtEvent(ref.current, e).length > 0) {
       const [{ index }] = getElementAtEvent(ref.current, e);
       const label = barData.labels[index];
-      if (socitiesCountAccToDistrict(label, data)) {
-        const districtsData = socitiesCountAccToDistrict(label, data);
+      if (societiesCountAccToDistrict(label, data)) {
+        const districtsData = societiesCountAccToDistrict(label, data);
         setChartData(districtsData);
         setDrill("true");
       }
@@ -31,7 +32,7 @@ const BarChart = ({ socitiesData }) => {
     setOrder(parseInt(e.currentTarget.value));
   };
   const handleDrill = () => {
-    setChartData(socitiesCountAccToStates(data));
+    setChartData(societiesCountAccToStates(data));
     setDrill("none");
   };
 
@@ -54,7 +55,7 @@ const BarChart = ({ socitiesData }) => {
       labels: Object.keys(data),
       datasets: [
         {
-          label: "No. of Socities in each " + type,
+          label: "No. of Societies in each " + type,
           data: Object.values(data),
           borderWidth: 1,
         },
@@ -64,10 +65,10 @@ const BarChart = ({ socitiesData }) => {
   };
 
   useEffect(() => {
-    setData(socitiesData);
-    setChartData(socitiesCountAccToStates(socitiesData));
+    setData(societiesData);
+    setChartData(societiesCountAccToStates(societiesData));
     setDrill("none");
-  }, [socitiesData]);
+  }, [societiesData]);
 
   return (
     <Box position="relative">
@@ -91,8 +92,10 @@ const BarChart = ({ socitiesData }) => {
         top="2%"
         onClick={handleDrill}
         display={drill}
+        variant="outline"
+        colorScheme="blue"
       >
-        Drill back
+        <Icon as={ArrowUpIcon} boxSize={6}></Icon>
       </Button>
       <Bar
         data={getData(order)}
@@ -106,7 +109,7 @@ const BarChart = ({ socitiesData }) => {
           plugins: {
             title: {
               display: true,
-              text: "Number of socities registered in each State/Districts",
+              text: "Number of societies registered in each State/Districts",
             },
           },
         }}
