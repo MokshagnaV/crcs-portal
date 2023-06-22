@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/crcs-portal/static/css/main.e6c13ad2.css",
-    "main.js": "/crcs-portal/static/js/main.4b50184b.js",
+    "main.js": "/crcs-portal/static/js/main.80356320.js",
     "static/js/787.a8de06d7.chunk.js": "/crcs-portal/static/js/787.a8de06d7.chunk.js",
     "static/media/crcs-r.png": "/crcs-portal/static/media/crcs-r.6aa291f49d44afe506c7.png",
     "index.html": "/crcs-portal/index.html",
     "main.e6c13ad2.css.map": "/crcs-portal/static/css/main.e6c13ad2.css.map",
-    "main.4b50184b.js.map": "/crcs-portal/static/js/main.4b50184b.js.map",
+    "main.80356320.js.map": "/crcs-portal/static/js/main.80356320.js.map",
     "787.a8de06d7.chunk.js.map": "/crcs-portal/static/js/787.a8de06d7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.4b50184b.js"
+    "static/js/main.80356320.js"
   ]
 }
