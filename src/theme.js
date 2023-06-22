@@ -5,13 +5,6 @@ const theme = extendTheme({
     heading: `'Open Sans', sans-serif`,
     body: `'Poppins', sans-serif`,
   },
-  components: {
-    Heading: {
-      defaultProps: {
-        textAlign: "center",
-      },
-    },
-  },
 });
 
 export default theme;

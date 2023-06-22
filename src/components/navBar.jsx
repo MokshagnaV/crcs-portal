@@ -113,7 +113,7 @@ export default function NavBar() {
           {!user && (
             <>
               <Button fontSize={"sm"} fontWeight={400} variant={"link"}>
-                <NavLink to="/registration">Sign In</NavLink>
+                <NavLink to="/registration">Sign Up</NavLink>
               </Button>
               <NavLink to="/login">
                 <Button

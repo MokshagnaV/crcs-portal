@@ -47,6 +47,16 @@ export default function Login() {
       justify={"center"}
       bg={useColorModeValue("gray.50", "gray.800")}
     >
+      <Button
+        as="a"
+        variant="link"
+        href="/"
+        position="absolute"
+        top="2%"
+        left="2%"
+      >
+        Home
+      </Button>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>

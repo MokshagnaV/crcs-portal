@@ -1,4 +1,18 @@
-import { Box, Card, Flex, Heading } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  Flex,
+  Heading,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { societiesActions } from "../store/societiesSlice";
 import BarChart from "./common/barChart";
@@ -10,10 +24,15 @@ import { useEffect } from "react";
 const CrcsCharts = (props) => {
   const { societies, year } = useSelector((state) => state.societies);
   const dispatch = useDispatch();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
     dispatch(societiesActions.setSocieties(getData()));
     dispatch(societiesActions.setYear(""));
   }, [dispatch]);
+  useEffect(() => {
+    onOpen();
+  }, [onOpen]);
+
   return (
     <Box id="main">
       <Heading textAlign="center" margin="1rem">
@@ -39,6 +58,21 @@ const CrcsCharts = (props) => {
           </Card>
         </Box>
       </Flex>
+      <Modal isOpen={isOpen} onClose={onClose} size="lg">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Info.</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            Please click on respective graphs to get more information.
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" onClick={onClose}>
+              Ok
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

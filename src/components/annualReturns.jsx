@@ -108,7 +108,7 @@ const AnnualReturns = (props) => {
         <GridItem colSpan="6" padding="2rem">
           <Center>
             <Button colorScheme="blue" onClick={generatePdf}>
-              Download Pdf
+              Download PDF
             </Button>
           </Center>
         </GridItem>

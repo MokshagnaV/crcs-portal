@@ -67,6 +67,16 @@ const Registration = (props) => {
 
   return (
     <Flex flexDirection="column">
+      <Button
+        as="a"
+        variant="link"
+        href="/"
+        position="absolute"
+        top="2%"
+        left="2%"
+      >
+        Home
+      </Button>
       <Container maxW="4xl">
         <Stack align="center">
           <Heading as="h1" size="s">
