@@ -2,7 +2,7 @@
 
 CRCS-Portal is a dynamic web application built to provide key statistics and insights about registered societies. It offers an interactive dashboard with various visualizations and two additional pages for detailed society listings and annual returns. This project is developed using React.js, React Chart.js 2 for visualizations, and the Chakra UI library for the user interface.
 
-![Home Page](./screenshots/home-page.png) ![Home Page Dark](./screenshots/home-page-dark.png)
+![Home Page](./screenshots/sm/home-page.jpg) ![Home Page Dark](./screenshots/sm/home-page-dark.jpg)
 
 Check out the page using the link below.
 
@@ -69,4 +69,3 @@ The Annual Returns page provides information on the annual returns of each regis
 - React.js: Used as the core framework for building the web application.
 - React Chart.js 2: Utilized for interactive data visualizations.
 - Chakra UI: Used for building the user interface and ensuring a consistent design.
-- Other technologies specific to your project.
