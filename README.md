@@ -2,6 +2,8 @@
 
 CRCS-Portal is a dynamic web application built to provide key statistics and insights about registered societies. It offers an interactive dashboard with various visualizations and two additional pages for detailed society listings and annual returns. This project is developed using React.js, React Chart.js 2 for visualizations, and the Chakra UI library for the user interface.
 
+![Home Page](./screenshots/home-page.png) ![Home Page Dark](./screenshots/home-page-dark.png)
+
 Check out the page using the link below.
 
 [![livepreview](https://img.shields.io/badge/'live%20preview'-20B2AA?style=for-the-badge)](https://mokshagnav.github.io/crcs-portal/)
@@ -41,6 +43,18 @@ The Societies Page displays all registered societies. It features:
 - Insightful Cards: States with the most societies, and the sector with the highest number of registered societies.
 - Filter Options: Filter the society table by state, sector, and year.
 - Downloadable PDF: Users have the option to download a list of societies as a PDF document. This feature adds convenience for users who need to save or print this data for offline use or documentation.
+
+### Bar Graph
+
+![Bar Graph](./screenshots/bar-graph.gif)
+
+### Line Graph
+
+![Line Graph](./screenshots/line-graph.gif)
+
+### Pie Chart
+
+![Pie Chart](./screenshots/pie-chart.gif)
 
 ## Annual Returns
 
