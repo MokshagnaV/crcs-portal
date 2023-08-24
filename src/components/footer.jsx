@@ -54,7 +54,7 @@ export default function Footer() {
             Designed and Developed by Mokshagna Vemula
           </Text>
           <Text fontWeight="bold">
-            Kamala Institue of Technology and Science, Karimnagar
+            Kamala Institute of Technology and Science, Karimnagar, Telangana
           </Text>
         </Box>
         <Stack direction={"row"} spacing={6}>

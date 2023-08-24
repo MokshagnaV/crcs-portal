@@ -39,22 +39,22 @@ const Societies = (props) => {
 
   const [dataset, setDataSet] = useState([]);
   const [filtering, setFiltering] = useState({});
-  const [higheshCount, setHighestCount] = useState({
+  const [highestCount, setHighestCount] = useState({
     sector: { name: "", count: "" },
     state: { name: "", count: "" },
   });
   useEffect(() => {
     setDataSet(getData());
-    const higheshCount = {};
+    const highestCount = {};
     const states = Object.entries(societiesCountAccToStates()).sort(
       ([, a], [, b]) => b - a
     )[0];
-    higheshCount.state = { name: states[0], count: states[1] };
+    highestCount.state = { name: states[0], count: states[1] };
     const sector = Object.entries(societiesCountAccToSector()).sort(
       ([, a], [, b]) => b - a
     )[0];
-    higheshCount.sector = { name: sector[0], count: sector[1] };
-    setHighestCount(higheshCount);
+    highestCount.sector = { name: sector[0], count: sector[1] };
+    setHighestCount(highestCount);
   }, []);
 
   const getFiltering = (e) => {
@@ -81,7 +81,7 @@ const Societies = (props) => {
 
   const generatePdf = useReactToPrint({
     content: () => tableRef.current,
-    documentTitle: "Socities list",
+    documentTitle: "Societies list",
     onAfterPrint: () =>
       toast({
         title: "PDF Download initiated",
@@ -94,13 +94,12 @@ const Societies = (props) => {
   return (
     <Box>
       <Heading textAlign="center" margin="1rem">
-        {!Object.entries(filtering).length && <span>All societies</span>}
+        {!Object.entries(filtering).length && <span>Registered societies</span>}
         {Object.entries(filtering).length !== 0 && (
           <span>
-            All societies of {filtering.sectorFactor}
-            {", "}
-            {filtering.stateFactor}
-            {", "}
+            Registered societies of{" "}
+            {filtering.sectorFactor && <span>{filtering.sectorFactor}, </span>}
+            {filtering.stateFactor && <span>{filtering.stateFactor}, </span>}
             {filtering.yearFactor}
           </span>
         )}
@@ -111,15 +110,15 @@ const Societies = (props) => {
           <Flex flexDir="row-reverse" p="1rem">
             <Card size="sm" flexGrow="1" m="1rem">
               <CardBody>
-                <Heading size={"sm"}> {higheshCount.sector.name}</Heading>
-                <Text>{higheshCount.sector.count}</Text>{" "}
+                <Heading size={"sm"}> {highestCount.sector.name}</Heading>
+                <Text>{highestCount.sector.count}</Text>{" "}
                 <Text fontStyle="italic"> Most Registered Sector</Text>
               </CardBody>
             </Card>
             <Card size="sm" flexGrow="1" m="1rem">
               <CardBody>
-                <Heading size={"sm"}> {higheshCount.state.name}</Heading>
-                <Text>{higheshCount.state.count}</Text>{" "}
+                <Heading size={"sm"}> {highestCount.state.name}</Heading>
+                <Text>{highestCount.state.count}</Text>{" "}
                 <Text fontStyle="italic">State with Highest Societies</Text>
               </CardBody>
             </Card>
